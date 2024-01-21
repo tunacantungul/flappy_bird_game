@@ -1,0 +1,61 @@
+[gd_scene load_steps=7 format=3 uid="uid://klaq8gt0kirs"]
+
+[ext_resource type="Texture2D" uid="uid://d5jcmluuslxk" path="res://bg.png" id="1_an7xf"]
+[ext_resource type="Script" path="res://Scenes/main.gd" id="1_q53pw"]
+[ext_resource type="PackedScene" uid="uid://d4ad8s1ul0ktt" path="res://Scenes/pipe.tscn" id="2_njv70"]
+[ext_resource type="PackedScene" uid="uid://dvwrmd1lko38o" path="res://Scenes/bird.tscn" id="3_8s7ps"]
+[ext_resource type="PackedScene" uid="uid://benuhbodcerl7" path="res://Scenes/ground.tscn" id="4_llhn7"]
+[ext_resource type="PackedScene" uid="uid://cksuxv86lvnup" path="res://Scenes/game_over.tscn" id="6_h68gg"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_q53pw")
+pipe_scene = ExtResource("2_njv70")
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(432, 384)
+texture = ExtResource("1_an7xf")
+
+[node name="Bird" parent="." instance=ExtResource("3_8s7ps")]
+
+[node name="Ground" parent="." instance=ExtResource("4_llhn7")]
+z_index = 1
+
+[node name="PipeTimer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="ScoreLabel" type="Label" parent="."]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 397.0
+offset_right = 467.0
+offset_bottom = 26.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "SCORE: 0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HighestScore" type="Label" parent="."]
+z_index = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 347.0
+offset_top = 43.0
+offset_right = 517.0
+offset_bottom = 101.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Highest Score: 0
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameOver" parent="." instance=ExtResource("6_h68gg")]
+
+[connection signal="hit" from="Ground" to="." method="_on_ground_hit"]
+[connection signal="timeout" from="PipeTimer" to="." method="_on_pipe_timer_timeout"]
+[connection signal="restart" from="GameOver" to="." method="_on_game_over_restart"]

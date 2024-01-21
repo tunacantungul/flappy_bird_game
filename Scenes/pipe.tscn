@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://d4ad8s1ul0ktt"]
+
+[ext_resource type="Texture2D" uid="uid://ddv3i55vg7t3b" path="res://pipe.png" id="1_ks8a8"]
+[ext_resource type="Script" path="res://pipe.gd" id="1_oc1yc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_na0fx"]
+size = Vector2(78, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t3y58"]
+size = Vector2(72, 524)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qbsnl"]
+size = Vector2(78, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjimn"]
+size = Vector2(72, 524)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8s366"]
+size = Vector2(20, 199)
+
+[node name="Pipe" type="Area2D" groups=["pipes"]]
+script = ExtResource("1_oc1yc")
+
+[node name="Upper" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+texture = ExtResource("1_ks8a8")
+offset = Vector2(2.08165e-12, -380)
+flip_v = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2.08165e-12, -118)
+shape = SubResource("RectangleShape2D_na0fx")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -398)
+shape = SubResource("RectangleShape2D_t3y58")
+
+[node name="Lower" type="Sprite2D" parent="."]
+position = Vector2(2.08165e-12, 2.08165e-12)
+texture = ExtResource("1_ks8a8")
+offset = Vector2(2.08165e-12, 380)
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="."]
+position = Vector2(0, 118)
+shape = SubResource("RectangleShape2D_qbsnl")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="."]
+position = Vector2(0, 398)
+shape = SubResource("RectangleShape2D_qjimn")
+
+[node name="ScoreArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ScoreArea"]
+position = Vector2(57, -0.5)
+shape = SubResource("RectangleShape2D_8s366")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_entered" from="ScoreArea" to="." method="_on_score_area_body_entered"]
